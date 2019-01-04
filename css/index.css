@@ -14,7 +14,6 @@ img{display: block;}
 .header{
     width: 100%;
     position: relative;
-
 }
 .header-main{
     width: 1100px;
@@ -71,30 +70,36 @@ img{display: block;}
     background: pink;
     position: absolute;
     top:80px;
-    left:0;
     bottom: 0;
-    right: 0;
-    /*overflow: hidden;*/
+    width: 100%;
+    overflow: hidden;
 }
-.inner{
+.content .contentmain{
     width: 100%;
     height: 500%;
     position: absolute;
     top:0;
+    left: 0;
+    transition: top 1s;
 }
-.inner li{
+.contentmain li{
     width: 100%;
     height: 20%;
     position: relative;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
-.inner li section{
+.contentmain li section{
     width: 1100px;
     height: 520px;
     background: hotpink;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -550px;
-    margin-top: -260px;
+    /*left: 50%;*/
+    /*top: 50%;*/
+    /*margin-left: -550px;*/
+    /*margin-top: -260px;*/
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    margin:auto;
 }
