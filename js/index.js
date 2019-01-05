@@ -17,18 +17,27 @@ window.onload=function () {
   headerHandel();
   function headerHandel() {
     //初始化小箭头来到第一dwon下面
-    jiantou.style.left=lisNodes[0].getBoundingClientRect().left+lisNodes[0].offsetWidth/2-jiantou.offsetWidth/2+'px'
+    jiantou.style.left = lisNodes[0].getBoundingClientRect().left + lisNodes[0].offsetWidth / 2 - jiantou.offsetWidth / 2 + 'px'
 
     //初始化时第一个dwon元素为100%
-    lisDwon[0].style.width='100%';
-
-    move(nowIndex)
-    }
-  function move(nowIndex) {
+    lisDwon[0].style.width = '100%';
     for (var i = 0; i < lisNodes.length; i++) {
       lisNodes[i].index = i;
       lisNodes[i].onclick = function () {
-        nowIndex = this.index
+        for (var i = 0; i < lisNodes.length; i++) {
+          lisNodes[i].index = i;
+          lisNodes[i].onclick = function () {
+            nowIndex = this.index
+            move(nowIndex)
+          }
+
+        }
+      }
+    }
+  }
+  //移动
+  function move(nowIndex) {
+
         //清除所有dwon的宽度 将宽度改为0
         for (var j = 0; j < lisDwon.length; j++) {
           lisDwon[j].style.width = '';
@@ -40,11 +49,12 @@ window.onload=function () {
         jiantou.style.left = lisNodes[nowIndex].getBoundingClientRect().left + lisNodes[nowIndex].offsetWidth / 2 - jiantou.offsetWidth / 2 + 'px'
         //改变内容区ul的TOP值
         ulNode.style.top = -nowIndex * contentNode.offsetHeight + 'px';
-      }
 
-    }
-    ulNode.style.top = -nowIndex * contentNode.offsetHeight + 'px';
+
   }
+  //滚轮事件
+  scllo();
+  function scllo() {
     //滚轮事件
     document.onmousewheel = wheel;
     if (document.addEventListener){
@@ -75,10 +85,10 @@ window.onload=function () {
         case 'up' :
 
 
-            if(nowIndex>0){
-              nowIndex--;
-              move(nowIndex)
-            }
+          if(nowIndex>0){
+            nowIndex--;
+            move(nowIndex)
+          }
 
           console.log(nowIndex)
           break;
@@ -97,8 +107,37 @@ window.onload=function () {
       //禁止默认行为
       // event.e
     }
+  }
 
+  //第一屏
+
+  var circlePoint=document.querySelector('.circle-point');
+  var circlePointLis=document.querySelectorAll('.circle-point li');
+  var homeMianLis=document.querySelectorAll('.homemian li');
+  var lastIndex=0;
+  var nowIndex=0;
+
+  for (var i = 0; i <circlePointLis .length; i++) {
+    circlePointLis[i].index=i;
+
+    circlePointLis[i].onclick=function () {
+      nowIndex=this.index;
+      for (var j = 0; j < homeMianLis.length; j++) {
+        homeMianLis[j].className='title';
+      }
+      if (lastIndex<nowIndex){
+        homeMianLis[lastIndex].className='title left-hide';
+        homeMianLis[nowIndex].className='title right-Show';
+      }else if(lastIndex>nowIndex){
+        homeMianLis[lastIndex].className='title right-hide';
+        homeMianLis[nowIndex].className='title left-Show';
+      }
+
+      lastIndex=nowIndex;
     }
+  }
+
+    };
 
 
 
