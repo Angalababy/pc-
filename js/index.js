@@ -80,7 +80,7 @@ window.onload=function () {
           flag = 'down'
         }
       }
-      console.log(flag);
+
       switch (flag) {
         case 'up' :
 
@@ -90,7 +90,7 @@ window.onload=function () {
             move(nowIndex)
           }
 
-          console.log(nowIndex)
+
           break;
         case 'down' :
 
@@ -100,7 +100,7 @@ window.onload=function () {
             move(nowIndex)
           }
 
-          console.log(nowIndex)
+
           break;
       }
 
@@ -152,7 +152,101 @@ window.onload=function () {
     }
   }
   }
-    };
+
+  //第五屏
+  var teamLists=document.querySelector('.team .team-lists');
+  var teamLis =document.querySelectorAll('.team .team-lists li');
+  var width =teamLis[0].offsetWidth;
+  var height =teamLis[0].offsetHeight;
+  var canvas=null;
+
+
+  for (var i = 0; i < teamLis.length; i++) {
+    teamLis[i].index=i;
+    teamLis[i].onmouseenter=function () {
+      for (var j = 0; j <teamLis .length; j++) {
+        teamLis[j].style.opacity='0.5';
+      }
+      this.style.opacity='1';
+      if(!canvas){
+        canvas=document.createElement('canvas');
+        canvas.width=width;
+        canvas.height=height;
+        canvas.className='canvas';
+        bubble(canvas);
+        teamLists.appendChild(canvas);
+      }
+      canvas.style.left = this.index * width + 'px';
+    }
+  }
+  teamLists.onmouseleave=function () {
+    for (var j = 0; j <teamLis.length; j++) {
+      teamLis[j].style.opacity='1';
+    }
+    canvas.remove();
+    canvas=null;
+  };
+  function bubble(canvas) {
+
+    if (canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+      var width = canvas.width;
+      var height = canvas.height;
+
+      var arr = [];
+      //生成圆
+      createCircleTimer = setInterval(function () {
+        var r = Math.round(Math.random() * 255);
+        var g = Math.round(Math.random() * 255);
+        var b = Math.round(Math.random() * 255);
+
+        var c_r = Math.round(Math.random() * 8 + 2);
+
+        var s = Math.round(Math.random() * 50 + 20);
+
+        var y = height + c_r;
+        var x = Math.round(Math.random() * width);
+
+        arr.push({
+          r: r,
+          g: g,
+          b: b,
+          c_r: c_r,
+          x: x,
+          y: y,
+          deg: 0,
+          s: s
+        })
+
+      }, 50);
+      //画圆
+      paintingTimer = setInterval(function () {
+        //清除上一次的画布
+        ctx.clearRect(0, 0, width, height);
+
+        for (var i = 0; i < arr.length; i++) {
+          var item = arr[i];
+          //角度递增
+          item.deg += 6;
+          //得到弧度的值
+          var rad = item.deg * Math.PI / 180;
+          //求x轴的y轴的坐标
+          var x = item.x + Math.sin(rad) * item.s;
+          var y = item.y - rad * item.s;
+          //删除已经跑出去的圆
+          if (y <= -item.c_r) {
+            arr.splice(i, 1);
+            continue;
+          }
+          ctx.fillStyle = 'rgb(' + item.r + ',' + item.g + ',' + item.b + ')';
+          ctx.beginPath();
+          ctx.arc(x, y, item.c_r, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      }, 1000 / 60)
+    }
+  }
+};
 
 
 

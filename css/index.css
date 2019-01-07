@@ -447,4 +447,52 @@ img{display: block;}
     transform: translateY(-100px);
 }
 
+/*第五屏*/
+.team{
+    position: relative;
+}
+.team .team-text{
+    float: left;
+    margin: 50px 0;
+    width: 400px;
+}
+.team .team-content{
+    float:right;
+    margin: 50px;
+    width: 400px;
+    height: 100%;
+}
+.team .team-lists{
+    position: absolute;
+    top: 230px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    width: 944px;
+    height: 448px;
 
+
+}
+.team .team-lists li{
+    float: left;
+    height: 100%;
+    width: 236px;
+    background-image: url("../img/team.png");
+
+}
+.team .team-lists li:nth-child(1){
+    background-position: 3px 0px;
+}
+.team .team-lists li:nth-child(2){
+    background-position: -230px 0px;
+}
+.team .team-lists li:nth-child(3){
+    background-position: -483px 0px;
+}
+.team .team-lists li:nth-child(4){
+    background-position: -710px 0px;
+}
+.canvas{
+    position: absolute;
+    top:0;
+}
