@@ -110,18 +110,25 @@ window.onload=function () {
   }
 
   //第一屏
+  homeHandle();
+  function homeHandle() {
+
 
   var circlePoint=document.querySelector('.circle-point');
   var circlePointLis=document.querySelectorAll('.circle-point li');
   var homeMianLis=document.querySelectorAll('.homemian li');
   var lastIndex=0;
   var nowIndex=0;
+  var lasetTime=0;
+
 
   for (var i = 0; i <circlePointLis .length; i++) {
     circlePointLis[i].index=i;
-
     circlePointLis[i].onclick=function () {
       nowIndex=this.index;
+      var nowTime=Date.now();
+      if(nowTime-lasetTime<=1000) return
+
       for (var j = 0; j < homeMianLis.length; j++) {
         homeMianLis[j].className='title';
       }
@@ -133,10 +140,18 @@ window.onload=function () {
         homeMianLis[nowIndex].className='title left-Show';
       }
 
+      //小圆点
+
+      this.className='active';
+      circlePointLis[lastIndex].className='';
+
+      lasetTime=nowTime
       lastIndex=nowIndex;
+
+
     }
   }
-
+  }
     };
 
 
