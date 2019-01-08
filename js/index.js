@@ -11,7 +11,121 @@ window.onload=function () {
 
     //获取内容区元素
   var contentNode=document.querySelector('.content');
-  var ulNode=document.querySelector('.content .contentmain')
+  var ulNode=document.querySelector('.content .contentmain');
+
+  var home = document.querySelector('.home');
+  var plane1 = document.querySelector('.plane1');
+  var plane2 = document.querySelector('.plane2');
+  var plane3 = document.querySelector('.plane3');
+  var pencil1 = document.querySelector('.pencil1');
+  var pencil2 = document.querySelector('.pencil2');
+  var pencil3 = document.querySelector('.pencil3');
+  var photoNodes =document.querySelectorAll('.about .about-photo');
+  var teamh2 = document.querySelector('.team h2');
+  var teamP = document.querySelector('.team p');
+  var pointNodes =document.querySelectorAll('.content-point li');
+
+
+
+
+  //出入场动画
+  var anArr = [
+    {
+      //字面量的方式创建每个对象
+      anIn:function () {
+        home.style.transform='translateY(0)';
+        home.style.opacity='1';
+      },
+      anOut:function () {
+        home.style.transform='translateY(-50%)';
+        home.style.opacity='0';
+      }
+    },
+    {
+      //字面量的方式创建每个对象
+      anIn:function () {
+        plane1.style.transform='translate(0,0)';
+        plane2.style.transform='translate(0,0)';
+        plane3.style.transform='translate(0,0)';
+      },
+      anOut:function () {
+        plane1.style.transform='translate(-100px,-100px)';
+        plane2.style.transform='translate(-100px,100px)';
+        plane3.style.transform='translate(100px,-100px)';
+
+      }
+    },
+    {
+      //字面量的方式创建每个对象
+      anIn:function () {
+        pencil1.style.transform='translateY(0)';
+        pencil2.style.transform='translateY(0)';
+        pencil3.style.transform='translateY(0)';
+      },
+      anOut:function () {
+        pencil1.style.transform='translateY(-100px)';
+        pencil2.style.transform='translateY(100px)';
+        pencil3.style.transform='translateY(100px)';
+      }
+    },
+
+    {
+      //字面量的方式创建每个对象
+      anIn:function () {
+        photoNodes[0].style.transform='rotate(0)';
+        photoNodes[1].style.transform='rotate(0)';
+
+      },
+      anOut:function () {
+        photoNodes[0].style.transform='rotate(45deg)';
+        photoNodes[1].style.transform='rotate(-45deg)';
+      }
+    },
+    {
+      //字面量的方式创建每个对象
+      anIn:function () {
+        teamh2.style.transform='translateX(0)';
+        teamP.style.transform='translateX(0)';
+
+      },
+      anOut:function () {
+        teamh2.style.transform='translateX(-100px)';
+        teamP.style.transform='translateX(100px)';
+      }
+    }
+  ];
+
+
+
+  //开机动画
+  var animation = document.querySelector('.animation');
+  var animationTop = document.querySelector('.animation .top');
+  var animationBottom = document.querySelector('.animation .bottom');
+  var animationLine = document .querySelector('.animation .line');
+
+  var animationArr = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg','about1.jpg','about2.jpg','about3.jpg','about4.jpg','worksimg1.jpg','worksimg2.jpg','worksimg3.jpg','worksimg4.jpg','team.png','greenLine.png'];
+  var num =0;
+  for (var i = 0; i <animationArr.length; i++) {
+    var img =new Image();
+    img.src ='img/'+animationArr[i];
+    img.onload=function () {
+      num++;
+      animationLine.style.width=num/animationArr.length*100+'%';
+
+      if(num===animationArr.length){
+        animationTop.style.height=0;
+        animationBottom.style.height=0;
+        animationLine.style.display='none';
+      }
+      animationTop.addEventListener('transitionend',function () {
+        animation.remove();
+        anArr[0].anIn()
+
+      })
+
+
+    }
+  }
 
   //完成头部js
   headerHandel();
@@ -36,6 +150,7 @@ window.onload=function () {
     }
   }
   //移动
+  var lastIndex = 0;
   function move(nowIndex) {
 
         //清除所有dwon的宽度 将宽度改为0
@@ -50,7 +165,18 @@ window.onload=function () {
         //改变内容区ul的TOP值
         ulNode.style.top = -nowIndex * contentNode.offsetHeight + 'px';
 
+    anArr[nowIndex].anIn();
+    anArr[lastIndex].anOut();
+    pointNodes[nowIndex]=
 
+
+
+    lastIndex=nowIndex;
+
+  }
+
+  for (var i = 0; i <anArr.length; i++) {
+    anArr[i].anOut();
   }
   //滚轮事件
   scllo();
@@ -96,7 +222,7 @@ window.onload=function () {
 
 
           if(nowIndex<4){
-            nowIndex++
+            nowIndex++;
             move(nowIndex)
           }
 
@@ -246,6 +372,8 @@ window.onload=function () {
       }, 1000 / 60)
     }
   }
+
+
 };
 
 
