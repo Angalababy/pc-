@@ -167,7 +167,8 @@ window.onload=function () {
 
     anArr[nowIndex].anIn();
     anArr[lastIndex].anOut();
-    pointNodes[nowIndex]=
+    pointNodes[lastIndex].className='';
+    pointNodes[nowIndex].className='active';
 
 
 
@@ -187,9 +188,11 @@ window.onload=function () {
       document.addEventListener('DOMMouseScroll', wheel);
     }
 
+    var timer =null;
     function wheel(event) {
+      clearTimeout(timer);
       event = event || window.event;
-
+      timer=setTimeout(function () {
       var flag = '';
       if (event.wheelDelta) {
         //ie/chrome
@@ -206,34 +209,27 @@ window.onload=function () {
           flag = 'down'
         }
       }
-
       switch (flag) {
         case 'up' :
-
-
           if(nowIndex>0){
             nowIndex--;
             move(nowIndex)
           }
-
-
           break;
         case 'down' :
-
-
           if(nowIndex<4){
             nowIndex++;
             move(nowIndex)
           }
-
-
           break;
       }
-
       //禁止默认行为
       // event.e
+      },50);
     }
-  }
+
+  };
+
 
   //第一屏
   homeHandle();
@@ -373,7 +369,20 @@ window.onload=function () {
     }
   }
 
+  for (var i = 0; i <pointNodes.length; i++) {
+    pointNodes[i].index=i;
+    pointNodes[i].onclick=function () {
+      nowIndex=this.index;
+      for (var j = 0; j <pointNodes.length; j++) {
+        pointNodes[j].className='';
+      }
+      this.className='active'
 
+
+      move(nowIndex);
+
+    }
+  }
 };
 
 
